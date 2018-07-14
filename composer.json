@@ -1,0 +1,17 @@
+{
+	"name": "webchemistry/embed-macro",
+	"type": "library",
+	"description": "Embed latte macro",
+	"require": {
+		"php": ">= 7.2"
+	},
+	"require-dev": {
+		"latte/latte": "^2.4",
+		"nette/di": "^2.4"
+	},
+	"autoload": {
+		"psr-4": {
+			"WebChemistry\\Macros\\": ["src/"]
+		}
+	}
+}
