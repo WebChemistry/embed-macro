@@ -3,6 +3,7 @@
 namespace WebChemistry\Macros\DI;
 
 use Nette\DI\CompilerExtension;
+use Nette\DI\Definitions\FactoryDefinition;
 use WebChemistry\Macros\EmbedMacro;
 
 class EmbedMacroExtension extends CompilerExtension {
@@ -13,8 +14,11 @@ class EmbedMacroExtension extends CompilerExtension {
 	public function beforeCompile(): void {
 		$builder = $this->getContainerBuilder();
 
-		$builder->getDefinition('latte.latteFactory')
-			->addSetup('?->onCompile[] = function ($engine) { ' . self::MACRO . '($engine->getCompiler()); }', ['@self']);
+		$def = $builder->getDefinition('latte.latteFactory');
+		if ($def instanceof FactoryDefinition) {
+			$def = $def->getResultDefinition();
+		}
+		$def->addSetup('?->onCompile[] = function ($engine) { ' . self::MACRO . '($engine->getCompiler()); }', ['@self']);
 	}
 
 }
